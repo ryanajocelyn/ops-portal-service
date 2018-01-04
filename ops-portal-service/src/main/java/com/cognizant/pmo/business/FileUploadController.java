@@ -88,8 +88,8 @@ public class FileUploadController extends AbstractController {
             List<Item> items = results.getItems();
             int i = 1;
             for (Item item : items) {
-                Map messageData = new HashMap();
-                messageData = readEmailItem(service, item.getId());
+                Map messageData = readEmailItem(service, item.getId());
+                
                 System.out.println("\nEmails #" + (i++) + ":");
                 System.out.println("subject : " + messageData.get("subject").toString());
                 System.out.println("Sender : " + messageData.get("senderName").toString());
