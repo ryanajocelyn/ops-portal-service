@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ops-portal-service">
+		<class>com.cognizant.pmo.entity.Account</class>
+		<class>com.cognizant.pmo.entity.Associate</class>
+		<class>com.cognizant.pmo.entity.Department</class>
+		<class>com.cognizant.pmo.entity.Grade</class>
+		<class>com.cognizant.pmo.entity.Project</class>
+		<class>com.cognizant.pmo.entity.ProjectAllocation</class>
+	</persistence-unit>
+</persistence>

@@ -31,17 +31,14 @@
       <dependency>
       	<groupId>org.springframework.ldap</groupId>
       	<artifactId>spring-ldap-core</artifactId>
-      	<version>2.2.0.RELEASE</version>
       </dependency>
       <dependency>
       	<groupId>org.springframework.ldap</groupId>
       	<artifactId>spring-ldap-core</artifactId>
-      	<version>2.2.0.RELEASE</version>
       </dependency>
       <dependency>
       	<groupId>org.springframework.ldap</groupId>
       	<artifactId>spring-ldap-core</artifactId>
-      	<version>2.2.0.RELEASE</version>
       </dependency>
       <dependency>
       	<groupId>org.scala-lang</groupId>
@@ -51,7 +48,6 @@
       <dependency>
       	<groupId>org.springframework.ldap</groupId>
       	<artifactId>spring-ldap-core</artifactId>
-      	<version>2.2.0.RELEASE</version>
       </dependency>
       <dependency>
     	<groupId>com.microsoft.ews-java-api</groupId>
@@ -63,6 +59,53 @@
       	<artifactId>commons-io</artifactId>
       	<version>2.5</version>
       </dependency>
+	  <dependency>
+		<groupId>org.eclipse.persistence</groupId>
+		<artifactId>javax.persistence</artifactId>
+		<version>2.1.0</version>
+	  </dependency>
+	  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jta-bitronix</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-artemis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
    </dependencies>
    <build>
       <sourceDirectory>src</sourceDirectory>
@@ -84,7 +127,7 @@
    <parent>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
-      <version>1.4.3.RELEASE</version>
+      <version>1.5.4.RELEASE</version>
    </parent>
    <properties>
       <java.version>1.8</java.version>
