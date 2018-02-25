@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Component;
 
 import com.cognizant.pmo.entity.Department;
 import com.cognizant.pmo.repository.DepartmentRepository;
@@ -17,6 +18,7 @@ import com.cognizant.pmo.service.DepartmentService;
  * @author 238209
  *
  */
+@Component
 public class DepartmentServiceImpl implements DepartmentService {
 
 	@Resource

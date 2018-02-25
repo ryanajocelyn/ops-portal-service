@@ -1,9 +1,18 @@
 package com.cognizant.pmo.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -39,19 +48,10 @@ public class Project implements Serializable {
 	@JoinColumn(name="account_id")
 	private Account account;
 
-	//bi-directional many-to-one association to Associate
-	@ManyToOne
-	@JoinColumn(name="project_pm_id")
-	private Associate associate;
-
 	//bi-directional many-to-one association to Department
 	@ManyToOne
 	@JoinColumn(name="project_owning_department")
 	private Department department;
-
-	//bi-directional many-to-one association to ProjectAllocation
-	@OneToMany(mappedBy="project")
-	private List<ProjectAllocation> projectAllocations;
 
 	public Project() {
 	}
@@ -104,14 +104,6 @@ public class Project implements Serializable {
 		this.account = account;
 	}
 
-	public Associate getAssociate() {
-		return this.associate;
-	}
-
-	public void setAssociate(Associate associate) {
-		this.associate = associate;
-	}
-
 	public Department getDepartment() {
 		return this.department;
 	}
@@ -119,27 +111,4 @@ public class Project implements Serializable {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-
-	public List<ProjectAllocation> getProjectAllocations() {
-		return this.projectAllocations;
-	}
-
-	public void setProjectAllocations(List<ProjectAllocation> projectAllocations) {
-		this.projectAllocations = projectAllocations;
-	}
-
-	public ProjectAllocation addProjectAllocation(ProjectAllocation projectAllocation) {
-		getProjectAllocations().add(projectAllocation);
-		projectAllocation.setProject(this);
-
-		return projectAllocation;
-	}
-
-	public ProjectAllocation removeProjectAllocation(ProjectAllocation projectAllocation) {
-		getProjectAllocations().remove(projectAllocation);
-		projectAllocation.setProject(null);
-
-		return projectAllocation;
-	}
-
 }

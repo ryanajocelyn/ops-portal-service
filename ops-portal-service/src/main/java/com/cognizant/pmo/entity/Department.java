@@ -25,10 +25,6 @@ public class Department implements Serializable {
 	@Column(name="department_type")
 	private String departmentType;
 
-	//bi-directional many-to-one association to Associate
-	@OneToMany(mappedBy="department")
-	private List<Associate> associates;
-
 	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="department")
 	private List<Project> projects;
@@ -58,28 +54,6 @@ public class Department implements Serializable {
 
 	public void setDepartmentType(String departmentType) {
 		this.departmentType = departmentType;
-	}
-
-	public List<Associate> getAssociates() {
-		return this.associates;
-	}
-
-	public void setAssociates(List<Associate> associates) {
-		this.associates = associates;
-	}
-
-	public Associate addAssociate(Associate associate) {
-		getAssociates().add(associate);
-		associate.setDepartment(this);
-
-		return associate;
-	}
-
-	public Associate removeAssociate(Associate associate) {
-		getAssociates().remove(associate);
-		associate.setDepartment(null);
-
-		return associate;
 	}
 
 	public List<Project> getProjects() {

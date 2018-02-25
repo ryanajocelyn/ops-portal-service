@@ -1,4 +1,0 @@
-ldap.url = ldap://192.168.43.1:389
-ldap.base = 
-ldap.user = 238209@cts.com
-ldap.password = Jan-2018

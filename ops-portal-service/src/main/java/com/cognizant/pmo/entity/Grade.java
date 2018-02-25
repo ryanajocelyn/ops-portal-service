@@ -1,8 +1,13 @@
 package com.cognizant.pmo.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -24,10 +29,6 @@ public class Grade implements Serializable {
 
 	@Column(name="grade_short_desc")
 	private String gradeShortDesc;
-
-	//bi-directional many-to-one association to Associate
-	@OneToMany(mappedBy="grade")
-	private List<Associate> associates;
 
 	public Grade() {
 	}
@@ -55,27 +56,4 @@ public class Grade implements Serializable {
 	public void setGradeShortDesc(String gradeShortDesc) {
 		this.gradeShortDesc = gradeShortDesc;
 	}
-
-	public List<Associate> getAssociates() {
-		return this.associates;
-	}
-
-	public void setAssociates(List<Associate> associates) {
-		this.associates = associates;
-	}
-
-	public Associate addAssociate(Associate associate) {
-		getAssociates().add(associate);
-		associate.setGrade(this);
-
-		return associate;
-	}
-
-	public Associate removeAssociate(Associate associate) {
-		getAssociates().remove(associate);
-		associate.setGrade(null);
-
-		return associate;
-	}
-
 }

@@ -20,7 +20,15 @@ public enum FcReportHeaders {
 	GRADE("Grade HR"), 
 	DEPARTMENT_NAME("Department Name"), 
 	FG_WORKER_ID("FG Worker ID"), 
-	FG_TERMINATION_DATE("FG Worker End Date");
+	FG_TERMINATION_DATE("FG Worker End Date"), 
+	DESIGNATION("Designation"), 
+	VERTICAL_HORIZONTAL("Vertical/Horizontal"), 
+	ASSIGNMENT_ID("Assignment ID"),
+	ASSIGNMENT_START_DATE("Assignment Start Date"),
+	ASSIGNMENT_END_DATE("Assignment End Date"),
+	ASSIGNMENT_STATUS("Assignment Status"),
+	ASSIGNMENT_PERCENTAGE("Percent Allocation"), 
+	PROJECT_ID("Project ID");
 	
 	private String headerName;
 	
