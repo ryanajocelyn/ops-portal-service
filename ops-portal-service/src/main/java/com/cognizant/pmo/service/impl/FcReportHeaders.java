@@ -28,7 +28,8 @@ public enum FcReportHeaders {
 	ASSIGNMENT_END_DATE("Assignment End Date"),
 	ASSIGNMENT_STATUS("Assignment Status"),
 	ASSIGNMENT_PERCENTAGE("Percent Allocation"), 
-	PROJECT_ID("Project ID");
+	PROJECT_ID("Project ID"), 
+	BILLABILITY_STATUS("Billability Status");
 	
 	private String headerName;
 	

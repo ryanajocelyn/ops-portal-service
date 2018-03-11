@@ -4,7 +4,7 @@
 package com.cognizant.pmo.entity.mongo;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -24,8 +24,8 @@ public class MFieldGlass {
 	private String fgWorkerId;
 	private String fgWorkerName;
 	private String invoiceStatus;
-	private Date fgStartDate;
-	private Date fgEndDate;
+	private LocalDate fgStartDate;
+	private LocalDate fgEndDate;
 	private String workerLocation;
 	private Double billableHours;
 	private Double invoiceAmount;
@@ -90,7 +90,7 @@ public class MFieldGlass {
 	/**
 	 * @return the fgStartDate
 	 */
-	public Date getFgStartDate() {
+	public LocalDate getFgStartDate() {
 		return fgStartDate;
 	}
 
@@ -98,7 +98,7 @@ public class MFieldGlass {
 	/**
 	 * @param fgStartDate the fgStartDate to set
 	 */
-	public void setFgStartDate(Date fgStartDate) {
+	public void setFgStartDate(LocalDate fgStartDate) {
 		this.fgStartDate = fgStartDate;
 	}
 
@@ -106,7 +106,7 @@ public class MFieldGlass {
 	/**
 	 * @return the fgEndDate
 	 */
-	public Date getFgEndDate() {
+	public LocalDate getFgEndDate() {
 		return fgEndDate;
 	}
 
@@ -114,7 +114,7 @@ public class MFieldGlass {
 	/**
 	 * @param fgEndDate the fgEndDate to set
 	 */
-	public void setFgEndDate(Date fgEndDate) {
+	public void setFgEndDate(LocalDate fgEndDate) {
 		this.fgEndDate = fgEndDate;
 	}
 

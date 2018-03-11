@@ -20,7 +20,7 @@ public enum ClarityReportHeaders {
 	TASK_TITLE("Task Title"),
 	HOURS_SUN("SUN"),
 	HOURS_MON("MON"),
-	HOURS_TUE("TUE"),
+	HOURS_TUE("TUES"),
 	HOURS_WED("WED"),
 	HOURS_THU("THU"),
 	HOURS_FRI("FRI"),
@@ -31,7 +31,7 @@ public enum ClarityReportHeaders {
 	SUBMITTED_DATE("Submitted Timestamp"),
 	REJECTED_BY("Rejected By"),
 	REJECTED_DATE("Rejected Timestamp"),
-	IS_APPROVED("Appr"),
+	IS_APPROVED("Appr Indicator"),
 	APPROVED_BY("Approved By"),
 	APPROVED_DATE("Approved Timestamp"),
 	HOURS_WEEK("Hours/week");

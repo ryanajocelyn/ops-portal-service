@@ -3,9 +3,10 @@
  */
 package com.cognizant.pmo.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import com.cognizant.pmo.bo.AssociateUBR;
 import com.cognizant.pmo.bo.Deviations;
 
 /**
@@ -14,5 +15,7 @@ import com.cognizant.pmo.bo.Deviations;
  */
 public interface FieldGlassService {
 
-	public List<Deviations> getEsaVsFgDeviations(List<Long> accountIdList, Date startDate, Date endDate);
+	public List<Deviations> getEsaVsFgDeviations(List<Long> accountIdList, LocalDate startDate, LocalDate endDate);
+
+	public List<AssociateUBR> getUBRDetails(List<Long> accountIdList, String month);
 }

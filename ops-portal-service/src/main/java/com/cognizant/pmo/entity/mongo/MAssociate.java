@@ -4,8 +4,8 @@
 package com.cognizant.pmo.entity.mongo;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,11 +23,11 @@ public class MAssociate {
 	@Id
 	private BigInteger id;
 	private String associateName;
-	private Date dateOfJoining;
+	private LocalDate dateOfJoining;
 	private String bgvStatus;
 
-	private Long resourceWorkdayId;
-	private Date fgTerminationDate;
+	private String resourceWorkdayId;
+	private LocalDate fgTerminationDate;
 	private String fgWorkerId;
 
 	private String location;
@@ -41,6 +41,9 @@ public class MAssociate {
 
 	private String grade;
 	private String gradeDescription;
+	
+	private double fgRate;
+	private double costPerMonth;
 
 	private List<MProjectAllocation> projectAllocations;
 	
@@ -137,28 +140,28 @@ public class MAssociate {
 	/**
 	 * @return the dateOfJoining
 	 */
-	public Date getDateOfJoining() {
+	public LocalDate getDateOfJoining() {
 		return dateOfJoining;
 	}
 
 	/**
 	 * @param dateOfJoining the dateOfJoining to set
 	 */
-	public void setDateOfJoining(Date dateOfJoining) {
+	public void setDateOfJoining(LocalDate dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
 	}
 
 	/**
 	 * @return the fgTerminationDate
 	 */
-	public Date getFgTerminationDate() {
+	public LocalDate getFgTerminationDate() {
 		return fgTerminationDate;
 	}
 
 	/**
 	 * @param fgTerminationDate the fgTerminationDate to set
 	 */
-	public void setFgTerminationDate(Date fgTerminationDate) {
+	public void setFgTerminationDate(LocalDate fgTerminationDate) {
 		this.fgTerminationDate = fgTerminationDate;
 	}
 
@@ -294,14 +297,42 @@ public class MAssociate {
 	/**
 	 * @return the resourceWorkdayId
 	 */
-	public Long getResourceWorkdayId() {
+	public String getResourceWorkdayId() {
 		return resourceWorkdayId;
 	}
 
 	/**
 	 * @param resourceWorkdayId the resourceWorkdayId to set
 	 */
-	public void setResourceWorkdayId(Long resourceWorkdayId) {
+	public void setResourceWorkdayId(String resourceWorkdayId) {
 		this.resourceWorkdayId = resourceWorkdayId;
+	}
+
+	/**
+	 * @return the fgRate
+	 */
+	public double getFgRate() {
+		return fgRate;
+	}
+
+	/**
+	 * @param fgRate the fgRate to set
+	 */
+	public void setFgRate(double fgRate) {
+		this.fgRate = fgRate;
+	}
+
+	/**
+	 * @return the costPerMonth
+	 */
+	public double getCostPerMonth() {
+		return costPerMonth;
+	}
+
+	/**
+	 * @param costPerMonth the costPerMonth to set
+	 */
+	public void setCostPerMonth(double costPerMonth) {
+		this.costPerMonth = costPerMonth;
 	}
 }

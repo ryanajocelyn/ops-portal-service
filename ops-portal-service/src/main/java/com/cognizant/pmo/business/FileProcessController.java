@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognizant.pmo.bo.AccountBo;
 import com.cognizant.pmo.bo.Record;
 import com.cognizant.pmo.entity.Account;
 import com.cognizant.pmo.entity.mongo.MAssociate;
@@ -65,7 +66,7 @@ public class FileProcessController extends AbstractController {
 	
 	@GetMapping("/process/xref")
 	public @ResponseBody Iterable<Account> processXrefReport() {
-		String fileName = "D:/238209/Technical/tmp/test_xref.xlsx";
+		String fileName = "D:/238209/Technical/tmp/xref_clarity.xlsx";
 		
 		boolean fileLoaded = fileProcessService.readAndLoadXRefReport(fileName);
 		System.out.println(fileLoaded);
@@ -105,8 +106,8 @@ public class FileProcessController extends AbstractController {
 			project = new MProject();
 			project.setId(new BigInteger(record.getStringValue("_id")));
 			project.setProjectName(record.getStringValue("projectName"));
-			project.setStartDate(record.getDateTimeValue("startDate"));
-			project.setEndDate(record.getDateTimeValue("endDate"));
+			project.setStartDate(record.getDateValue("startDate"));
+			project.setEndDate(record.getDateValue("endDate"));
 			project.setAccountId(Long.valueOf(record.getStringValue("accountId")));
 			project.setAccountName(record.getStringValue("accountName"));
 			project.setPortfolioName(record.getStringValue("portfolioName"));
@@ -124,5 +125,10 @@ public class FileProcessController extends AbstractController {
 	@GetMapping("/associate/all")
 	public @ResponseBody Iterable<MAssociate> getAssociateByCriteria() {
 		return associateService.findAssociateByCriteria();
+	}
+	
+	@GetMapping("/accounts/all")
+	public @ResponseBody Iterable<AccountBo> getAccounts() {
+		return projectService.getAllProjectAccounts();
 	}
 }

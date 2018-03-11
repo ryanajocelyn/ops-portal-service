@@ -4,7 +4,8 @@
 package com.cognizant.pmo.entity.mongo;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,12 +20,12 @@ public class MClarity {
 	@Id
 	private BigInteger id;
 	
-	private Long resourceWorkdayId;
+	private String resourceWorkdayId;
 	private String associateName;
 	private String resourceManagerName;
 	private Long rmWorkdayId;
-	private Date weekStartDate;
-	private Date weekEndDate;
+	private LocalDate weekStartDate;
+	private LocalDate weekEndDate;
 	private String esiProjectId;
 	private String esiProjectTitle;
 	private String esiTaskId;
@@ -42,17 +43,49 @@ public class MClarity {
 	private double rate;
 	
 	private String submiitedBy;
-	private Date submittedOn;
+	private LocalDateTime submittedOn;
 	
 	private String rejectedBy;
-	private Date rejectedOn;
+	private LocalDateTime rejectedOn;
 	
 	private boolean isApproved;
 	private String approvedBy;
-	private Date approvedOn;
+	private LocalDateTime approvedOn;
 	
 	private double maxWeekHours;
 
+	public void addHoursSun(Double doubleValue) {
+		hoursSun += doubleValue;
+	}
+
+	public void addHoursMon(Double doubleValue) {
+		hoursMon += doubleValue;
+	}
+
+	public void addHoursTue(Double doubleValue) {
+		hoursTue += doubleValue;		
+	}
+
+	public void addHoursWed(Double doubleValue) {
+		hoursWed += doubleValue;
+	}
+
+	public void addHoursThu(Double doubleValue) {
+		hoursThu += doubleValue;
+	}
+
+	public void addHoursFri(Double doubleValue) {
+		hoursFri += doubleValue;
+	}
+
+	public void addHoursSat(Double doubleValue) {
+		hoursSat += doubleValue;		
+	}
+
+	public void addWeekTotal(Double doubleValue) {
+		weekTotal += doubleValue;
+	}
+	
 	/**
 	 * @return the id
 	 */
@@ -70,14 +103,14 @@ public class MClarity {
 	/**
 	 * @return the resourceWorkdayId
 	 */
-	public Long getResourceWorkdayId() {
+	public String getResourceWorkdayId() {
 		return resourceWorkdayId;
 	}
 
 	/**
 	 * @param resourceWorkdayId the resourceWorkdayId to set
 	 */
-	public void setResourceWorkdayId(Long resourceWorkdayId) {
+	public void setResourceWorkdayId(String resourceWorkdayId) {
 		this.resourceWorkdayId = resourceWorkdayId;
 	}
 
@@ -121,34 +154,6 @@ public class MClarity {
 	 */
 	public void setRmWorkdayId(Long rmWorkdayId) {
 		this.rmWorkdayId = rmWorkdayId;
-	}
-
-	/**
-	 * @return the weekStartDate
-	 */
-	public Date getWeekStartDate() {
-		return weekStartDate;
-	}
-
-	/**
-	 * @param weekStartDate the weekStartDate to set
-	 */
-	public void setWeekStartDate(Date weekStartDate) {
-		this.weekStartDate = weekStartDate;
-	}
-
-	/**
-	 * @return the weekEndDate
-	 */
-	public Date getWeekEndDate() {
-		return weekEndDate;
-	}
-
-	/**
-	 * @param weekEndDate the weekEndDate to set
-	 */
-	public void setWeekEndDate(Date weekEndDate) {
-		this.weekEndDate = weekEndDate;
 	}
 
 	/**
@@ -348,20 +353,6 @@ public class MClarity {
 	}
 
 	/**
-	 * @return the submittedOn
-	 */
-	public Date getSubmittedOn() {
-		return submittedOn;
-	}
-
-	/**
-	 * @param submittedOn the submittedOn to set
-	 */
-	public void setSubmittedOn(Date submittedOn) {
-		this.submittedOn = submittedOn;
-	}
-
-	/**
 	 * @return the rejectedBy
 	 */
 	public String getRejectedBy() {
@@ -373,20 +364,6 @@ public class MClarity {
 	 */
 	public void setRejectedBy(String rejectedBy) {
 		this.rejectedBy = rejectedBy;
-	}
-
-	/**
-	 * @return the rejectedOn
-	 */
-	public Date getRejectedOn() {
-		return rejectedOn;
-	}
-
-	/**
-	 * @param rejectedOn the rejectedOn to set
-	 */
-	public void setRejectedOn(Date rejectedOn) {
-		this.rejectedOn = rejectedOn;
 	}
 
 	/**
@@ -418,20 +395,6 @@ public class MClarity {
 	}
 
 	/**
-	 * @return the approvedOn
-	 */
-	public Date getApprovedOn() {
-		return approvedOn;
-	}
-
-	/**
-	 * @param approvedOn the approvedOn to set
-	 */
-	public void setApprovedOn(Date approvedOn) {
-		this.approvedOn = approvedOn;
-	}
-
-	/**
 	 * @return the maxWeekHours
 	 */
 	public double getMaxWeekHours() {
@@ -444,4 +407,75 @@ public class MClarity {
 	public void setMaxWeekHours(double maxWeekHours) {
 		this.maxWeekHours = maxWeekHours;
 	}
+
+	/**
+	 * @return the weekStartDate
+	 */
+	public LocalDate getWeekStartDate() {
+		return weekStartDate;
+	}
+
+	/**
+	 * @param weekStartDate the weekStartDate to set
+	 */
+	public void setWeekStartDate(LocalDate weekStartDate) {
+		this.weekStartDate = weekStartDate;
+	}
+
+	/**
+	 * @return the weekEndDate
+	 */
+	public LocalDate getWeekEndDate() {
+		return weekEndDate;
+	}
+
+	/**
+	 * @param weekEndDate the weekEndDate to set
+	 */
+	public void setWeekEndDate(LocalDate weekEndDate) {
+		this.weekEndDate = weekEndDate;
+	}
+
+	/**
+	 * @return the submittedOn
+	 */
+	public LocalDateTime getSubmittedOn() {
+		return submittedOn;
+	}
+
+	/**
+	 * @param submittedOn the submittedOn to set
+	 */
+	public void setSubmittedOn(LocalDateTime submittedOn) {
+		this.submittedOn = submittedOn;
+	}
+
+	/**
+	 * @return the rejectedOn
+	 */
+	public LocalDateTime getRejectedOn() {
+		return rejectedOn;
+	}
+
+	/**
+	 * @param rejectedOn the rejectedOn to set
+	 */
+	public void setRejectedOn(LocalDateTime rejectedOn) {
+		this.rejectedOn = rejectedOn;
+	}
+
+	/**
+	 * @return the approvedOn
+	 */
+	public LocalDateTime getApprovedOn() {
+		return approvedOn;
+	}
+
+	/**
+	 * @param approvedOn the approvedOn to set
+	 */
+	public void setApprovedOn(LocalDateTime approvedOn) {
+		this.approvedOn = approvedOn;
+	}
+
 }

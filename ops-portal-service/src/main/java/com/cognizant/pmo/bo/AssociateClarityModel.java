@@ -3,13 +3,16 @@
  */
 package com.cognizant.pmo.bo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.cognizant.pmo.entity.mongo.MClarity;
+import com.cognizant.pmo.entity.mongo.MFieldGlass;
+import com.cognizant.pmo.utils.Constants;
+import com.cognizant.pmo.utils.Utils;
 
 /**
  * @author 238209
@@ -17,37 +20,81 @@ import com.cognizant.pmo.entity.mongo.MClarity;
  */
 public class AssociateClarityModel {
 
-	private List<MClarity> mClarityList;
+	private Deviations deviation;
+
+	private double approvedClarityBillableHours;
 	
-	public AssociateClarityModel(List<MClarity> mClarityList) {
-		this.mClarityList = mClarityList;
+	private double approvedUnpaidTimeoffHours;
+	
+	private double approvedFgBillableHours;
+	
+	private double minBillableHours;
+	
+	public AssociateClarityModel(Deviations deviation) {
+		this.deviation = deviation;
+		
+		approvedClarityBillableHours = 0;
+		approvedUnpaidTimeoffHours = 0;
+		approvedFgBillableHours = 0;
+		
+		minBillableHours = 0;
 	}
 	
-	public Double getApprovedClarityHours(Date startDate, Date endDate) {
+	public void calculate(LocalDate startDate, LocalDate endDate) {
+		List<MClarity> mClarityList = deviation.getClarityList();
 		
-		double approvedHoursPerWeek = 0; 
 		for (MClarity clarity : mClarityList) {
-			approvedHoursPerWeek += getApprovedClarityHours(clarity, startDate, endDate);
+			
+			if (StringUtils.contains(clarity.getEsiProjectTitle(), Constants.UNPAID_TEXT)) {
+				approvedUnpaidTimeoffHours += getApprovedClarityHours(clarity, startDate, endDate);
+			} else {
+				approvedClarityBillableHours += getApprovedClarityHours(clarity, startDate, endDate);
+			}
 		}
 		
-		return approvedHoursPerWeek;
+		
+		List<MFieldGlass> mFgList = deviation.getFgList();
+		if (mFgList != null) {
+			for (MFieldGlass mFieldGlass : mFgList) {
+				approvedFgBillableHours += getApprovedFgHours(mFieldGlass, startDate, endDate);
+			}
+		} 
 	}
 
-	private Double getApprovedClarityHours(MClarity clarity, Date startDate, Date endDate) {
+	public static double getTotalHoursPerWeek (MClarity mClarity) {
+		double hoursPerWeek = 0;
+		
+		hoursPerWeek += mClarity.getHoursSun();
+		hoursPerWeek += mClarity.getHoursMon();
+		hoursPerWeek += mClarity.getHoursTue();
+		hoursPerWeek += mClarity.getHoursWed();
+		hoursPerWeek += mClarity.getHoursThu();
+		hoursPerWeek += mClarity.getHoursFri();
+		hoursPerWeek += mClarity.getHoursSat();
+		
+		return hoursPerWeek;
+	}
+	
+	private Double getApprovedClarityHours(MClarity clarity, LocalDate startDate, LocalDate endDate) {
 		double approvedHours = 0;
 		
-		if (clarity.isApproved()) {
+		if (clarity.isApproved() 
+				&& Utils.isDateBetween(clarity.getWeekStartDate(), startDate, endDate)) {
 			List<Double> hoursForWeek = getHoursForWeek(clarity);
-			Date weekCurrDate = new Date(clarity.getWeekStartDate().getTime());
+
 			for (Double hours : hoursForWeek) {
-				if (DateUtils.isSameDay(startDate, weekCurrDate) 
-						|| DateUtils.isSameDay(endDate, weekCurrDate)
-						|| (startDate.after(weekCurrDate) && endDate.before(weekCurrDate)) ) {
-					approvedHours += hours;
-				}
-				
-				weekCurrDate = DateUtils.addDays(weekCurrDate, 1);
+				approvedHours += hours;
 			}
+		}
+		
+		return approvedHours;
+	}
+	
+	private Double getApprovedFgHours(MFieldGlass fg, LocalDate startDate, LocalDate endDate) {
+		double approvedHours = 0;
+		
+		if ( Utils.isDateBetween(fg.getFgStartDate(), startDate, endDate) ) {
+			approvedHours += fg.getBillableHours();
 		}
 		
 		return approvedHours;
@@ -65,5 +112,61 @@ public class AssociateClarityModel {
 		hoursForWeek.add(clarity.getHoursSat());
 		
 		return hoursForWeek;
+	}
+
+	/**
+	 * @return the approvedClarityBillableHours
+	 */
+	public double getApprovedClarityBillableHours() {
+		return approvedClarityBillableHours;
+	}
+
+	/**
+	 * @param approvedClarityBillableHours the approvedClarityBillableHours to set
+	 */
+	public void setApprovedClarityBillableHours(double approvedClarityBillableHours) {
+		this.approvedClarityBillableHours = approvedClarityBillableHours;
+	}
+
+	/**
+	 * @return the approvedUnpaidTimeoffHours
+	 */
+	public double getApprovedUnpaidTimeoffHours() {
+		return approvedUnpaidTimeoffHours;
+	}
+
+	/**
+	 * @param approvedUnpaidTimeoffHours the approvedUnpaidTimeoffHours to set
+	 */
+	public void setApprovedUnpaidTimeoffHours(double approvedUnpaidTimeoffHours) {
+		this.approvedUnpaidTimeoffHours = approvedUnpaidTimeoffHours;
+	}
+
+	/**
+	 * @return the minBillableHours
+	 */
+	public double getMinBillableHours() {
+		return minBillableHours;
+	}
+
+	/**
+	 * @param minBillableHours the minBillableHours to set
+	 */
+	public void setMinBillableHours(double minBillableHours) {
+		this.minBillableHours = minBillableHours;
+	}
+
+	/**
+	 * @return the approvedFgBillableHours
+	 */
+	public double getApprovedFgBillableHours() {
+		return approvedFgBillableHours;
+	}
+
+	/**
+	 * @param approvedFgBillableHours the approvedFgBillableHours to set
+	 */
+	public void setApprovedFgBillableHours(double approvedFgBillableHours) {
+		this.approvedFgBillableHours = approvedFgBillableHours;
 	}
 }

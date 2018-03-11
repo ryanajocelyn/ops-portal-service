@@ -4,7 +4,7 @@
 package com.cognizant.pmo.entity.mongo;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author 238209
@@ -13,11 +13,12 @@ import java.util.Date;
 public class MProjectAllocation {
 	
 	private BigInteger assignmentId;
-	private Date assignmentStartDate;
-	private Date assignmentEndDate;
+	private LocalDate assignmentStartDate;
+	private LocalDate assignmentEndDate;
 	private String assignmentStatus;
 	private int assignmentPercentage;
 	private BigInteger projectId;
+	private boolean billable;
 	
 	/**
 	 * @return the assignmentId
@@ -34,25 +35,25 @@ public class MProjectAllocation {
 	/**
 	 * @return the assignmentStartDate
 	 */
-	public Date getAssignmentStartDate() {
+	public LocalDate getAssignmentStartDate() {
 		return assignmentStartDate;
 	}
 	/**
 	 * @param assignmentStartDate the assignmentStartDate to set
 	 */
-	public void setAssignmentStartDate(Date assignmentStartDate) {
+	public void setAssignmentStartDate(LocalDate assignmentStartDate) {
 		this.assignmentStartDate = assignmentStartDate;
 	}
 	/**
 	 * @return the assignmentEndDate
 	 */
-	public Date getAssignmentEndDate() {
+	public LocalDate getAssignmentEndDate() {
 		return assignmentEndDate;
 	}
 	/**
 	 * @param assignmentEndDate the assignmentEndDate to set
 	 */
-	public void setAssignmentEndDate(Date assignmentEndDate) {
+	public void setAssignmentEndDate(LocalDate assignmentEndDate) {
 		this.assignmentEndDate = assignmentEndDate;
 	}
 	/**
@@ -90,6 +91,18 @@ public class MProjectAllocation {
 	 */
 	public void setProjectId(BigInteger projectId) {
 		this.projectId = projectId;
+	}
+	/**
+	 * @return the billable
+	 */
+	public boolean isBillable() {
+		return billable;
+	}
+	/**
+	 * @param billable the billable to set
+	 */
+	public void setBillable(boolean billable) {
+		this.billable = billable;
 	}
 	
 }

@@ -3,24 +3,23 @@
  */
 package com.cognizant.pmo.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import com.cognizant.pmo.bo.Deviations;
+import com.cognizant.pmo.bo.HolidayBo;
 import com.cognizant.pmo.entity.mongo.MAssociate;
-import com.cognizant.pmo.entity.mongo.MClarity;
-import com.cognizant.pmo.entity.mongo.MFieldGlass;
+import com.cognizant.pmo.entity.mongo.MHoliday;
 import com.cognizant.pmo.repository.mongo.MAssociateRepository;
 import com.cognizant.pmo.repository.mongo.MClarityRepository;
 import com.cognizant.pmo.repository.mongo.MFieldGlassRepository;
+import com.cognizant.pmo.repository.mongo.MHolidayRepository;
 import com.cognizant.pmo.service.AssociateService;
+import com.cognizant.pmo.utils.Utils;
 
 /**
  * @author 238209
@@ -37,49 +36,61 @@ public class AssociateServiceImpl implements AssociateService {
 	
 	@Resource
 	private MFieldGlassRepository mFgRepository;
-	
+
+	@Resource
+	private MHolidayRepository mHolidayRepository;
+
 	@Override
 	public List<MAssociate> findAssociateByCriteria() {
 		return massociateRepository.findAll();
 	}
 
 	@Override
-	public List<Deviations> calculateDeviations() {
-		List<MAssociate> associateList = massociateRepository.findAll();
+	public boolean saveHoliday(HolidayBo holiday) {
 		
-		List<Deviations> deviationsList = new ArrayList<Deviations>();
-		Deviations deviation = null;
-		for (MAssociate mAssociate : associateList) {
-			deviation = new Deviations();
-			
-			deviation.setAssociate(mAssociate);
-			Long resWorkdayId = mAssociate.getResourceWorkdayId();
-			if (resWorkdayId != null && resWorkdayId > 0) {
-				List<MClarity> clarityList = mClarityRepository.findByResourceIdQuery(resWorkdayId);
-				Map<Date, MFieldGlass> fgMap = mapFieldGlassByDate(mAssociate.getFgWorkerId());
-				
-				for (MClarity mClarity : clarityList) {
-					MFieldGlass fieldGlass = fgMap.get(mClarity.getWeekStartDate());
-					
-					if (fieldGlass != null) {
-						Double fgHours = fieldGlass.getBillableHours();
-						//Double clarityHours = mClarity.get
-					}
-				}
-			}
+		MHoliday mHoliday = new MHoliday();
+		mHoliday.setDescription(holiday.getDescription());
+		mHoliday.setDate(Utils.parseDate(holiday.getDate(), Utils.FORMAT_YYYY_MM_DD));
+		mHoliday.setLocation(holiday.getLocation());
+		
+		MHoliday savedEntity = mHolidayRepository.save(mHoliday);
+		
+		boolean saved = false;
+		if (savedEntity != null
+				&& savedEntity.getId() != null
+				&& StringUtils.isNotBlank(savedEntity.getId().toString())) {
+			saved = true;
 		}
-		
-		return deviationsList;
+				
+		return saved;
 	}
 
-	private Map<Date, MFieldGlass> mapFieldGlassByDate(String fgWorkerId) {
-		List<MFieldGlass> fgList = mFgRepository.findByResourceIdQuery(fgWorkerId);
+	@Override
+	public boolean deleteHoliday(HolidayBo holiday) {
+		return false;
+	}
+
+	@Override
+	public List<HolidayBo> getAllHolidays() {
+		List<MHoliday> holidaysList = mHolidayRepository.findAll();
 		
-		Map<Date, MFieldGlass> fgMap = new HashMap<Date, MFieldGlass>();
-		for (MFieldGlass mFieldGlass : fgList) {
-			fgMap.put(mFieldGlass.getFgStartDate(), mFieldGlass);
-		}
+		List<HolidayBo> holidayBoList = holidaysList.stream()
+						.map(h -> {
+							HolidayBo holidayBo = new HolidayBo();
+							holidayBo.setDate(Utils.formatDate(h.getDate(), Utils.FORMAT_DD_MON_YYYY));
+							holidayBo.setDescription(h.getDescription());
+							holidayBo.setId(h.getId().toString());
+							holidayBo.setLocation(h.getLocation());
+							
+							return holidayBo;
+						})
+						.collect(Collectors.toList());
 		
-		return fgMap;
+		return holidayBoList;
+	}
+
+	@Override
+	public List<MAssociate> findAssociateWithMissingXref() {
+		return massociateRepository.findByResourceWorkdayIdNull();
 	}
 }

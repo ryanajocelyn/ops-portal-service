@@ -5,7 +5,7 @@ package com.cognizant.pmo.service;
 
 import java.util.List;
 
-import com.cognizant.pmo.bo.Deviations;
+import com.cognizant.pmo.bo.HolidayBo;
 import com.cognizant.pmo.entity.mongo.MAssociate;
 
 /**
@@ -16,5 +16,11 @@ public interface AssociateService {
 
 	public List<MAssociate> findAssociateByCriteria();
 	
-	public List<Deviations> calculateDeviations();
+	public boolean saveHoliday(HolidayBo holiday);
+	
+	public boolean deleteHoliday(HolidayBo holiday);
+	
+	public List<HolidayBo> getAllHolidays();
+	
+	public List<MAssociate> findAssociateWithMissingXref();
 }
